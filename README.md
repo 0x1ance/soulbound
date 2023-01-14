@@ -6,7 +6,14 @@ The implementation of the Soulbound Standard inspired by Vitalik Buterin's SBT w
 
 ## Personal thoughts by 0x1ance after reading Vitalik Buterin's thought-provoking SBT whitepaper
 
-To design a more organized, manageable web3 society for the general public, meanwhile reaching an equilibrium between centralization & decentralization (or **privacy & transparency**), SBT is a brilliant intermediate for us to structure the web3 society. I would like to perceive the whole blockchain as the general ledger, while the soulhub contract of each organization (governments, companies, private societies, etc.) is a sub-ledger. Everything that happened within the sub-ledger is fully controlled by the organization, while the output of each sub-ledger can be viewed as a summary of all the user activities. Through the soulbound subscription pattern, we can explore both **top-down** (_instructions from top to lower hierarchy, like soulbound contracts with activities fully managed by the soulhub organization_) and **bottom-up** (_information feed from low/equal up to high hierarchy (data consumer), soulbound contracts only consume the user validation result from soulhub to perform their business logic but not controlled by the soulhub_) information flow. Meanwhile, the relationship doesn`t have to be unidirectional, which allows us to implement a more sophisticated & intelligent web3 network among different entities.
+To design a more organized, manageable web3 society for the general public, meanwhile reaching an equilibrium between centralization & decentralization (or **privacy & transparency**), SBT is a brilliant intermediate for us to structure the web3 society. 
+
+I would like to perceive the whole blockchain as the general ledger, while the soulhub contract of each organization (governments, companies, private societies, etc.) is a sub-ledger. Everything that happened within the sub-ledger is fully controlled by the organization, while the output of each sub-ledger can be viewed as a summary of all the user activities. Through the soulbound subscription pattern, we can explore both:
+
+a. **top-down**: _instructions from top to lower hierarchy, like soulbound contracts with activities fully managed by the soulhub organization_
+b. **bottom-up**: _information feed from low/equal up to high hierarchy (data consumer), soulbound contracts only consume the user validation result from soulhub to perform their business logic but not controlled by the soulhub_
+
+information flows. Meanwhile, the relationship doesn`t have to be unidirectional, which allows us to implement a more sophisticated & intelligent web3 network among different entities.
 
 # Concept Walkthrough
 
