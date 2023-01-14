@@ -15,18 +15,6 @@ library SoulboundErrorCodes {
 /**
  * @dev [Author:0x1ance] Implementation of the Soulbound Standard inspired by Vitalik Buterin's SBT whitepaper at https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763, and his blog
  * @dev https://vitalik.ca/general/2022/01/26/soulbound.html
- *
- * * [Personal thoughts by 0x1ance after reading Vitalik Buterin's thought-provoking SBT whitepaper]
- * To design a more organized, manageable web3 society for the general public, meanwhile reaching an equilibrium between centralization & decentralization (or
- * privacy & transparency), SBT is a brilliant intermediate for us to structure the web3 society. I would like to perceive the whole blockchain as the general
- * ledger, while the soulhub contract of each organization (governments, companies, private societies, etc.) is a sub-ledger. Everything that happened within the
- * sub-ledger is fully controlled by the organization, while the output of each sub-ledger can be viewed as a summary of all the user activities.
- *
- * Through the soulbound subscription pattern, we can explore both top-down (instructions from top to lower hierarchy, like soulbound contracts with activities
- * fully managed by the soulhub organization) and bottom-up (information feed from low/equal up to high hierarchy (data consumer), soulbound contracts only consume
- * the user validation result from soulhub to perform their business logic but not controlled by the soulhub) information flow. Meanwhile, the relationship doesn`t
- * have to be unidirectional, which allows us to implement a more sophisticated & intelligent web3 network among different entities.
- *
  * * The implementation of Soulbound standard by 0x1ance is composed of three main components:
  * 1. Soulhub contract
  * 2. Soulhub manager contract
@@ -199,7 +187,7 @@ contract Soulbound is Ownable, ERC165, ISoulbound {
     // ─── Inherited Functions ─────────────────────────────────────────────────────
 
     /**
-     * @dev See {IERC165-supportsInterface}.
+     * @dev See {IERC165-supportsInterface}
      */
     function supportsInterface(
         bytes4 interfaceId_
