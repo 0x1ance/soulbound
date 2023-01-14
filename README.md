@@ -8,12 +8,12 @@ The implementation of the Soulbound Standard inspired by Vitalik Buterin's SBT w
 
 To design a more organized, manageable web3 society for the general public, meanwhile reaching an equilibrium between centralization & decentralization (or **privacy & transparency**), SBT is a brilliant intermediate for us to structure the web3 society. 
 
-I would like to perceive the whole blockchain as the general ledger, while the soulhub contract of each organization (governments, companies, private societies, etc.) is a sub-ledger. Everything that happened within the sub-ledger is fully controlled by the organization, while the output of each sub-ledger can be viewed as a summary of all the user activities. Through the soulbound subscription pattern, we can explore both:
+I would like to perceive the whole blockchain as the general ledger, while the soulhub contract of each organization (governments, companies, private societies, etc.) is a sub-ledger. Everything that happened within the sub-ledger is fully controlled by the organization, while the output of each sub-ledger can be viewed as a summary of all the user activities. Through the soulbound subscription pattern, we can explore two information flows:
 
-a. **top-down**: _instructions from top to lower hierarchy, like soulbound contracts with activities fully managed by the soulhub organization_
-b. **bottom-up**: _information feed from low/equal up to high hierarchy (data consumer), soulbound contracts only consume the user validation result from soulhub to perform their business logic but not controlled by the soulhub_
+1. **top-down**: instructions from top to lower hierarchy, like soulbound contracts with activities fully managed by the soulhub organization
+2. **bottom-up**: information feed from low/equal up to high hierarchy (data consumer), soulbound contracts only consume the user validation result from soulhub to perform their business logic but not controlled by the soulhub
 
-information flows. Meanwhile, the relationship doesn`t have to be unidirectional, which allows us to implement a more sophisticated & intelligent web3 network among different entities.
+Meanwhile, the relationship doesn`t have to be unidirectional, which allows us to implement a more sophisticated & intelligent web3 network among different entities.
 
 # Concept Walkthrough
 
@@ -35,7 +35,7 @@ The identity of each user in the soulhub contract will be represented by a uniqu
 
 ### Two functionalities for a soulhub administrator role:
 
-<sub>In general, there are two main functionalities for soulhub administrators:</sub>
+In general, there are two main functionalities for soulhub administrators:
 
 (1) **perform the administrative operations of the soulhub contract**, including setting the user`s wallet address to the corresponding soul, or signing an authorization signature to users to set their wallet address to the corresponding soul themselves, etc.
 
@@ -51,7 +51,7 @@ Even when the organization pivots and changes its business requirement, the soul
 
 ### Two purposes for a contract to subscribe as a soulbound contract
 
-<sub>In general, there are two core purposes for a contract to subscribe as a soulbound contract and be bound to the core soulhub contract:</sub>
+In general, there are two core purposes for a contract to subscribe as a soulbound contract and be bound to the core soulhub contract:
 
 (1) serves as **an organization-controlled contract under the subscribed soulhub contract owned by the organization**, to satisfy business requirements. Examples can be found in sbt/ERC721Soulbound: _soulhub administrators can sign a message hash, to authorize the user to perform the mint function_. Or a more complex business case study as the Moxport contract: _the moxport contract has been granted as a soulhub administrator role, therefore it can mint the soulbound ERC721 wish token when users call the mintWish function_.
 
