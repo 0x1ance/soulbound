@@ -60,4 +60,4 @@ A soulbound contract is the satellite contract of the organizational soulhub con
 
 # Examples
 
-Please refer to the sbt/ERC721Soulbound
+Please refer to the examples/WishERC721Soulbound

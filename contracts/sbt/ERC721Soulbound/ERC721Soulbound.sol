@@ -8,7 +8,7 @@ import "../../soulhub/soulhub-manager/ISoulhubManager.sol";
 import "./lib/ERC721SoulboundErrorCodes.sol";
 
 /**
- * @dev [Author:0x1ance] Example Implementation of Soulbound Standard on ERC721
+ * @dev [Author:0x1ance] Implementation of Soulbound ERC721 Core contract
  *
  * Notes:
  * Each soul will registered to a soulhub, which will validate whether a specific address has been granted a soulhub administrator role of this sole, if an address has
