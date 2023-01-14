@@ -1,12 +1,17 @@
 # Soulbound by 0x1ance
 
-This implementation of Soulbound Standard is my humble contribution to the bright future of human society. I hope to make it an easily understandable introduction to the concept of a decentralized society & soulbound for general developers who would like to be part of this evolution. There's still much room for improvement, but it is highly welcomed to open issues and discussion to make this implementation an easily adoptable standard for everyone.
+This implementation of Soulbound Standard is my humble contribution to the bright future of web3 society, inspired by Vitalik Buterin's SBT whitepaper (Decentralized Society: Finding Web3's Soul) at https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763, and his blog https://vitalik.ca/general/2022/01/26/soulbound.html.
 
-The implementation of the Soulbound Standard inspired by Vitalik Buterin's SBT whitepaper (Decentralized Society: Finding Web3's Soul) at https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763, and his blog https://vitalik.ca/general/2022/01/26/soulbound.html. The excitement about how we can shape the future web3 society as a blockchain/web3 engineer is beyond imagination. Great thanks to Vitalik Buterin and the talented team for publishing such an inspiring whitepaper, and pave the way for the entire blockchain developer community to make the ecosystem more organized and healthy.
+The main purpose of this project is to deliver an easy, understandable introduction of the decentralized society (DeSoc) & soulbound token (SBT) to the general web3 developers.
 
-## Personal thoughts by 0x1ance after reading Vitalik Buterin's thought-provoking SBT whitepaper
+My excitement about how we can shape the future web3 society as a blockchain/web3 engineer is beyond words. Great thanks to the talented team & Vitalik Buterin for publishing such an inspiring paper over DeSoc, which paves the way for the web3 community to transform our ecosystem into a more organized and structural way.
 
-To design a more organized, manageable web3 society for the general public, meanwhile reaching an equilibrium between centralization & decentralization (or **privacy & transparency**), SBT is a brilliant intermediate for us to structure the web3 society. 
+There's still much room for improvement in the code, therefore it is highly welcomed to open issues and discussions on how can we construct the future decentralized society in a better way, &
+bring a more inclusive Soulbound standard for everyone to adopt easily.
+
+## Thoughts by 0x1ance towards Vitalik Buterin's thought-provoking SBT whitepaper
+
+To design a more organized, manageable web3 society for the general public, meanwhile reaching an equilibrium between centralization & decentralization (or **privacy & transparency**), SBT is a brilliant intermediate for us to structure the web3 society.
 
 I would like to perceive the whole blockchain as the general ledger, while the soulhub contract of each organization (governments, companies, private societies, etc.) is a sub-ledger. Everything that happened within the sub-ledger is fully controlled by the organization, while the output of each sub-ledger can be viewed as a summary of all the user activities. Through the soulbound subscription pattern, we can explore two information flows:
 
@@ -31,11 +36,9 @@ The identity of each user in the soulhub contract will be represented by a uniqu
 
 ## Soulhub Manager Contract
 
-**A soulhub manager contract provides the administrator role management functionality for a soulhub contract, which defines the organizational structure, by granting the administrator role to accounts (either contracts or wallet).**
+A soulhub manager contract provides the administrator role management functionality for a soulhub contract, which defines the organizational structure, by granting the administrator role to accounts (either contracts or wallet).
 
-### Two functionalities for a soulhub administrator role:
-
-In general, there are two main functionalities for soulhub administrators:
+### Two functionalities for the soulhub administrator role:
 
 (1) **perform the administrative operations of the soulhub contract**, including setting the user`s wallet address to the corresponding soul, or signing an authorization signature to users to set their wallet address to the corresponding soul themselves, etc.
 
@@ -47,11 +50,9 @@ Even when the organization pivots and changes its business requirement, the soul
 
 ## Soulbound Contract
 
-**A soulbound contract is the satellite contract of the organizational soulhub contract(s).**
+A soulbound contract is the satellite contract of the organizational soulhub contract(s).
 
-### Two purposes for a contract to subscribe as a soulbound contract
-
-In general, there are two core purposes for a contract to subscribe as a soulbound contract and be bound to the core soulhub contract:
+### Two core purposes for a contract to subscribe to the soulhub as a soulbound contract
 
 (1) serves as **an organization-controlled contract under the subscribed soulhub contract owned by the organization**, to satisfy business requirements. Examples can be found in sbt/ERC721Soulbound: _soulhub administrators can sign a message hash, to authorize the user to perform the mint function_. Or a more complex business case study as the Moxport contract: _the moxport contract has been granted as a soulhub administrator role, therefore it can mint the soulbound ERC721 wish token when users call the mintWish function_.
 
