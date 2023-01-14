@@ -1,0 +1,15 @@
+name: 0x1ance/Soulbound CI
+
+on: [push]
+
+jobs:
+  builds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: yarn
+      - name: Contract Compilation & Type Generation
+        run: yarn compile
+      - name: Test Cases
+        run: yarn test
