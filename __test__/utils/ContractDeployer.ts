@@ -1,8 +1,6 @@
-
+import { SoulhubManager } from './../../typechain-types/contracts/soulhub-manager/SoulhubManager';
 import { ethers } from 'hardhat'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
-import { SoulhubManager } from '@/types/contracts/soulhub-manager'
-
 
 type ContractDeploymentBaseConfig = {
     owner?: SignerWithAddress

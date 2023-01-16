@@ -889,12 +889,19 @@
     lodash "^4.17.15"
     ts-essentials "^7.0.1"
 
-"@typechain/hardhat@^6.1.2":
+"@typechain/hardhat@^6.1.5":
   version "6.1.5"
   resolved "https://registry.yarnpkg.com/@typechain/hardhat/-/hardhat-6.1.5.tgz#caad58a1d3e9cd88061a584eb4f4fa763d5dcad1"
   integrity sha512-lg7LW4qDZpxFMknp3Xool61Fg6Lays8F8TXdFGBG+MxyYcYU5795P1U2XdStuzGq9S2Dzdgh+1jGww9wvZ6r4Q==
   dependencies:
     fs-extra "^9.1.0"
+
+"@typechain/truffle-v5@^8.0.2":
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/@typechain/truffle-v5/-/truffle-v5-8.0.2.tgz#d899710b24705edb3eee5c3d8eb44ef68412d9a2"
+  integrity sha512-bjp1V/U0ow9lnqANcn8rfGf0yR+Ivogk6dMoY9gljLX3Vkd7jWfhvb4crKvvj92SpW65FQWsjoyZJnJzioOKiQ==
+  dependencies:
+    lodash "^4.17.15"
 
 "@types/async-eventemitter@^0.2.1":
   version "0.2.1"
@@ -5898,7 +5905,7 @@ type@^2.7.2:
   resolved "https://registry.yarnpkg.com/type/-/type-2.7.2.tgz#2376a15a3a28b1efa0f5350dcf72d24df6ef98d0"
   integrity sha512-dzlvlNlt6AXU7EBSfpAscydQ7gXB+pPGsPnfJnZpiNJBDj7IaJzQlBZYGdEi4R9HmPdBv2XmWJ6YUtoTa7lmCw==
 
-typechain@^8.1.0:
+typechain@^8.1.1:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/typechain/-/typechain-8.1.1.tgz#9c2e8012c2c4c586536fc18402dcd7034c4ff0bd"
   integrity sha512-uF/sUvnXTOVF2FHKhQYnxHk4su4JjZR8vr4mA2mBaRwHTbwh0jIlqARz9XJr1tA0l7afJGvEa1dTSi4zt039LQ==
