@@ -1,9 +1,9 @@
-// SPDX-L_soulhubicense-Identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
-import "./soulhub/ISoulhub.sol";
+import "../soulhub/ISoulhub.sol";
 import "./ISoulbound.sol";
 
 library SoulboundErrorCodes {

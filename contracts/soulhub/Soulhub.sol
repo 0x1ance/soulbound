@@ -4,7 +4,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 import "./ISoulhub.sol";
-import "./soulhub-manager/ISoulhubManager.sol";
+import "../soulhub-manager/ISoulhubManager.sol";
 import "./lib/SoulErrorCodes.sol";
 import "../utils/SignatureHelper.sol";
 

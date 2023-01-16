@@ -5,8 +5,12 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
-  "include": ["./scripts", "./__test__", "./types"],
+  "include": ["./scripts", "./__test__", "./types", "./examples"],
   "files": ["./hardhat.config.ts"]
 }

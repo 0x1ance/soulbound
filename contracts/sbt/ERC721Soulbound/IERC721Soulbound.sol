@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
-import "../../ISoulbound.sol";
+import "../../soulbound/ISoulbound.sol";
 
 /**
  * @dev [Author:0x1ance] Required interface of a ERC721Soulbound contract.

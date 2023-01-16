@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "./soulhub-manager/ISoulhubManager.sol";
+import "../soulhub-manager/ISoulhubManager.sol";
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 /**

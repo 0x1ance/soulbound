@@ -24,6 +24,9 @@ import "./lib/SoulhubManagerErrorCodes.sol";
  * interesting implementations, taking soulhub of a DAO as a possible implementation direction, the DAO owner can grant a soulhub administrator role to users by
  * airdropping a soulbound ERC721 token, or even develop a more complex organizational structure based on it. Even when the organization pivots and changes its
  * business requirement, the soulhub account can easily develop and set up a new soul manager contract fulfilling new requirements.
+ *
+ * Notes:
+ * * Actual implementation can refer to the SoulhubManager.sol or ./extensions/SoulhubManagerERC721.sol for demonstrations
  */
 abstract contract SoulhubManagerBase is Ownable, ERC165, ISoulhubManager {
     // ─── Constructor ─────────────────────────────────────────────────────

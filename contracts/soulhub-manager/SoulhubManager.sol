@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "../SoulhubManagerBase.sol";
+import "./SoulhubManagerBase.sol";
 
 /**
  * @dev [Author:0x1ance] Experimental implementation of the Soulhub Manager contract in the {Soulbound - Soulhub Manager Contract} with a multi-administrator 

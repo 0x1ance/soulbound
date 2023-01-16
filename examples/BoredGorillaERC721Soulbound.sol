@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -20,7 +20,7 @@ import "../contracts/sbt/ERC721SoulBound/ERC721SoulBound.sol";
  * original ERC721 standard,
  *
  */
-contract WishERC721Soulbound is
+contract BoredGorillaERC721Soulbound is
     ERC721Soulbound,
     ERC721Pausable,
     ERC721Enumerable
