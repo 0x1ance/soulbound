@@ -4,7 +4,7 @@ import { ethers } from 'hardhat';
 
 const NULL_SOUL = 0
 
-xdescribe('UNIT TEST: Soulhub Contract - setSoul', () => {
+describe('UNIT TEST: Soulhub Contract - setSoul', () => {
 
   it('setSoul: should throw error if the caller is not soulhub administator', async () => {
     const [owner, random] = await ethers.getSigners()
@@ -223,7 +223,7 @@ xdescribe('UNIT TEST: Soulhub Contract - setSoul', () => {
 })
 
 
-xdescribe('UNIT TEST: Soulhub Contract - _bindSoulLogic', () => {
+describe('UNIT TEST: Soulhub Contract - _bindSoulLogic', () => {
 
   it('_bindSoulLogic: should throw error if the target soul equals to the current soul', async () => {
     const [owner, target] = await ethers.getSigners()
@@ -288,7 +288,7 @@ xdescribe('UNIT TEST: Soulhub Contract - _bindSoulLogic', () => {
   })
 })
 
-xdescribe('UNIT TEST: Soulhub Contract - _unbindSoulLogic', () => {
+describe('UNIT TEST: Soulhub Contract - _unbindSoulLogic', () => {
 
   it('_unbindSoulLogic: should throw error if the current soul is a null soul', async () => {
     const [owner, target] = await ethers.getSigners()

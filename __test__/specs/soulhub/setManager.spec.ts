@@ -3,7 +3,7 @@ import { expect, assert } from 'chai'
 import { ethers } from 'hardhat';
 
 
-xdescribe('UNIT TEST: Soulhub Contract - setManager', () => {
+describe('UNIT TEST: Soulhub Contract - setManager', () => {
   
   it('setManager: should update the current soulhub manager', async () => {
     const [owner] = await ethers.getSigners()
