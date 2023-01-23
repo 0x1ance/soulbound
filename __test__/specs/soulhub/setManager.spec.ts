@@ -42,7 +42,7 @@ describe('UNIT TEST: Soulhub Contract - setManager', () => {
     return soulhub.connect(owner).setManager(falsyManager.address)
       .then(() => assert.fail())
       .catch((err: any) => {
-        assert.include(err.message, 'Soul:InvalidInterface')
+        assert.include(err.message, 'Soulhub:InvalidInterface')
       })
   })
 

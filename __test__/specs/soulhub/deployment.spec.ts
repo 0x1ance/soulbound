@@ -36,7 +36,7 @@ describe('UNIT TEST: Soulhub Contract - deployment', () => {
     return contractDeployer.Soulhub({ owner, name, manager: falsyManager })
       .then(() => assert.fail())
       .catch((err: any) => {
-        assert.include(err.message, 'Soul:InvalidInterface')
+        assert.include(err.message, 'Soulhub:InvalidInterface')
       })
 
   })

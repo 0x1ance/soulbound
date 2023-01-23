@@ -2,7 +2,7 @@ import { SoulhubManager } from './../../typechain-types/contracts/soulhub-manage
 import { ethers } from 'hardhat'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import Chance from 'chance'
-import { SignatureHelper, Soulhub } from '../../typechain-types';
+import { SignatureHelper, Soulbound, Soulhub } from '../../typechain-types';
 import { LogLevel } from '@ethersproject/logger'
 
 ethers.utils.Logger.setLogLevel(LogLevel.ERROR);
@@ -15,6 +15,10 @@ type ContractDeploymentBaseConfig = {
 type SoulhubDeploymentConfig = ContractDeploymentBaseConfig & {
     name?: string,
     manager?: SoulhubManager
+}
+
+type SoulboundDeploymentConfig = ContractDeploymentBaseConfig & SoulhubDeploymentConfig & {
+    soulhub?: Soulhub
 }
 
 class ContractDeployer {
@@ -54,6 +58,28 @@ class ContractDeployer {
             targetSoulhubManager.address
         )
         return [soulhub, targetSoulhubManager, targetOwner] as [
+            Soulhub,
+            SoulhubManager,
+            SignerWithAddress,
+        ]
+    }
+    async Soulbound(
+        { owner, manager, name = chance.string({ length: 8 }), soulhub }: SoulboundDeploymentConfig = {}
+    ) {
+
+        const [defaultOwner] = await ethers.getSigners()
+        const targetOwner = owner ?? defaultOwner
+        const targetSoulhubManager = manager ?? (await this.SoulhubManager({ owner: targetOwner }))[0]
+        const targetSoulhub = soulhub ?? (await this.Soulhub({ owner: targetOwner, manager: targetSoulhubManager, name }))[0]
+
+        const contractFactory = await ethers.getContractFactory('Soulbound', {
+        })
+        const soulbound = await contractFactory.connect(targetOwner).deploy(
+            targetSoulhub.address
+        )
+
+        return [soulbound, targetSoulhub, targetSoulhubManager, targetOwner] as [
+            Soulbound,
             Soulhub,
             SoulhubManager,
             SignerWithAddress,

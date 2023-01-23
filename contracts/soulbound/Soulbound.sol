@@ -8,8 +8,9 @@ import "./ISoulbound.sol";
 
 library SoulboundErrorCodes {
     string constant InvalidInterface = "Soulbound:InvalidInterface";
+    string constant InvalidAddress = "Soulbound:InvalidAddress";
     string constant NotOwnerOrSoulhubAdministrator =
-        "Soulbound:CallerIsNotOwnerOrSoulhubAdministrator";
+        "Soulbound:NotOwnerOrSoulhubAdministrator";
 }
 
 /**
@@ -68,7 +69,9 @@ contract Soulbound is Ownable, ERC165, ISoulbound {
      * * Operations:
      * * Initialize the _soulhub metadata
      */
-    constructor(address soulhub_) {
+    constructor(
+        address soulhub_
+    ) interfaceGuard(soulhub_, type(ISoulhub).interfaceId) {
         _soulhub = ISoulhub(soulhub_);
     }
 
@@ -97,6 +100,7 @@ contract Soulbound is Ownable, ERC165, ISoulbound {
      * ! Input account_ must supports the interface of interfaceId_
      */
     modifier interfaceGuard(address account_, bytes4 interfaceId_) {
+        require(account_ != address(0), SoulboundErrorCodes.InvalidAddress);
         // address must supports the target interface
         require(
             ERC165Checker.supportsInterface(account_, interfaceId_),

@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 import "./ISoulhub.sol";
 import "../soulhub-manager/ISoulhubManager.sol";
-import "./lib/SoulErrorCodes.sol";
+import "./lib/SoulhubErrorCodes.sol";
 import "../utils/SignatureHelper.sol";
 
 /**
@@ -77,10 +77,10 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
      * ! Input account_ must supports the interface of interfaceId_
      */
     modifier interfaceGuard(address account_, bytes4 interfaceId_) {
-        require(account_ != address(0), SoulErrorCodes.InvalidAddress);
+        require(account_ != address(0), SoulhubErrorCodes.InvalidAddress);
         require(
             ERC165Checker.supportsInterface(account_, interfaceId_),
-            SoulErrorCodes.InvalidInterface
+            SoulhubErrorCodes.InvalidInterface
         );
         _;
     }
@@ -95,7 +95,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
      * * Update the nonce_ corresponding to account_ to True after all operations have completed
      */
     modifier nonceGuard(uint256 nonce_, address account_) {
-        require(nonce(account_) == nonce_, SoulErrorCodes.InvalidNonce);
+        require(nonce(account_) == nonce_, SoulhubErrorCodes.InvalidNonce);
 
         _;
 
@@ -117,7 +117,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
     ) {
         require(
             SignatureHelper.recoverSigner(msgHash_, sig_) == signer_,
-            SoulErrorCodes.InvalidSigner
+            SoulhubErrorCodes.InvalidSigner
         );
         _;
     }
@@ -217,7 +217,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
      * ! The caller must be the owner or soulhub administrator
      */
     function setSoul(address account_, uint256 soul_) external {
-        require(isAdministrator(_msgSender()), SoulErrorCodes.Unauthorized);
+        require(isAdministrator(_msgSender()), SoulhubErrorCodes.Unauthorized);
         _setSoulLogic(account_, soul_);
         emit SetSoul(account_, soul_);
     }
@@ -253,7 +253,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
             )
         )
     {
-        require(isAdministrator(signer_), SoulErrorCodes.Unauthorized);
+        require(isAdministrator(signer_), SoulhubErrorCodes.Unauthorized);
         _setSoulLogic(_msgSender(), soul_);
         emit SetSoul(_msgSender(), soul_, nonce_, signer_);
     }
@@ -285,7 +285,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
      */
     function _unbindSoulLogic(address account_) private {
         uint256 currentSoul = _souls[account_];
-        require(currentSoul != NULL_SOUL, SoulErrorCodes.Unauthorized);
+        require(currentSoul != NULL_SOUL, SoulhubErrorCodes.Unauthorized);
         SoulProfile storage soulProfile = _soulProfiles[currentSoul];
         uint256 memberIdx;
         uint256 lastIdx = soulProfile.count - 1;
@@ -320,7 +320,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
         uint256 currentSoul = _souls[account_];
         require(
             soul_ != NULL_SOUL && soul_ != currentSoul,
-            SoulErrorCodes.InvalidSoul
+            SoulhubErrorCodes.InvalidSoul
         );
         // if current soul is not a NULL_SOUL, unbind current soul first
         if (currentSoul != NULL_SOUL) {

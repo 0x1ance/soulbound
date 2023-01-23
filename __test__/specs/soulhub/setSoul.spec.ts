@@ -13,7 +13,7 @@ describe('UNIT TEST: Soulhub Contract - setSoul', () => {
     return soulhub.connect(random)['setSoul(address,uint256)'](random.address, 1)
       .then(() => assert.fail())
       .catch((err: any) => {
-        assert.include(err.message, 'Soul:Unauthorized')
+        assert.include(err.message, 'Soulhub:Unauthorized')
       })
   })
 
@@ -81,7 +81,7 @@ describe('UNIT TEST: Soulhub Contract - setSoul', () => {
     return soulhub.connect(target)['setSoul(uint256,uint256,bytes,address)'](targetSoul, invalidNonce, authedSig, owner.address)
       .then(() => assert.fail())
       .catch((err: any) => {
-        assert.include(err.message, 'Soul:InvalidNonce')
+        assert.include(err.message, 'Soulhub:InvalidNonce')
       })
   })
 
@@ -112,7 +112,7 @@ describe('UNIT TEST: Soulhub Contract - setSoul', () => {
     return soulhub.connect(target)['setSoul(uint256,uint256,bytes,address)'](targetSoul, nonce, authedSig, invalidSigner.address)
       .then(() => assert.fail())
       .catch((err: any) => {
-        assert.include(err.message, 'Soul:InvalidSigner')
+        assert.include(err.message, 'Soulhub:InvalidSigner')
       })
   })
 
@@ -142,7 +142,7 @@ describe('UNIT TEST: Soulhub Contract - setSoul', () => {
     return soulhub.connect(target)['setSoul(uint256,uint256,bytes,address)'](targetSoul, nonce, authedSig, invalidSigner.address)
       .then(() => assert.fail())
       .catch((err: any) => {
-        assert.include(err.message, 'Soul:Unauthorized')
+        assert.include(err.message, 'Soulhub:Unauthorized')
       })
   })
 
@@ -236,7 +236,7 @@ describe('UNIT TEST: Soulhub Contract - _bindSoulLogic', () => {
     return soulhub.connect(owner)['setSoul(address,uint256)'](target.address, targetSoul)
       .then(() => assert.fail())
       .catch((err: any) => {
-        assert.include(err.message, 'Soul:InvalidSoul')
+        assert.include(err.message, 'Soulhub:InvalidSoul')
       })
   })
 
@@ -300,7 +300,7 @@ describe('UNIT TEST: Soulhub Contract - _unbindSoulLogic', () => {
     return soulhub.connect(owner)['setSoul(address,uint256)'](target.address, NULL_SOUL)
       .then(() => assert.fail())
       .catch((err: any) => {
-        assert.include(err.message, 'Soul:Unauthorized')
+        assert.include(err.message, 'Soulhub:Unauthorized')
       })
   })
 
