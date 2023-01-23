@@ -49,7 +49,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
     // ─── Constructor ─────────────────────────────────────────────────────────────
 
     /**
-     * @param soulName_ The name of the deployed soul
+     * @param name_ The name of the deployed soulhub
      * @param manager_ The address of the initial soulhub manager
      * ! Requirements:
      * ! Input manager_ must pass the validation of interfaceGuard corresponding to the ISoulhubManager interface
@@ -58,10 +58,10 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
      * * Initialize the _manager metadata
      */
     constructor(
-        string memory soulName_,
+        string memory name_,
         address manager_
     ) interfaceGuard(manager_, type(ISoulhubManager).interfaceId) {
-        _name = soulName_;
+        _name = name_;
         _manager = ISoulhubManager(manager_);
     }
 
@@ -135,10 +135,10 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
     }
 
     /**
-     * @dev [Access Right Management] See {ISoulhub-isAdministrator}: Check if the target account has a soulhub administrator role
+     * @dev [Access Right Management] See {ISoulhub-isAdministrator}: Check if the target account is either owner or has a soulhub administrator role
      */
     function isAdministrator(address account_) public view returns (bool) {
-        return _manager.isAdministrator(account_);
+        return account_ == owner() || _manager.isAdministrator(account_);
     }
 
     /**
@@ -162,7 +162,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
         return
             (targetAccount_ != address(0)) &&
             (_souls[targetAccount_] != 0) &&
-            (_souls[account_] == _souls[account_]);
+            (_souls[targetAccount_] == _souls[account_]);
     }
 
     // ─────────────────────────────────────────────────────────────────────────────
@@ -217,7 +217,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
      * ! The caller must be the owner or soulhub administrator
      */
     function setSoul(address account_, uint256 soul_) external {
-        require(_msgSender() == owner() || isAdministrator(_msgSender()));
+        require(isAdministrator(_msgSender()), SoulErrorCodes.Unauthorized);
         _setSoulLogic(account_, soul_);
         emit SetSoul(account_, soul_);
     }
@@ -230,23 +230,22 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
      * -
      */
     function setSoul(
-        address account_,
         uint256 soul_,
         uint256 nonce_,
         bytes memory sig_,
         address signer_
     )
         external
-        nonceGuard(nonce_, account_)
+        nonceGuard(nonce_, _msgSender())
         signatureGuard(
             sig_,
             signer_,
             SignatureHelper.prefixed(
                 keccak256(
                     abi.encodePacked(
-                        "setSoul(address,uint256,uint256,bytes,address)",
+                        "setSoul(uint256,uint256,bytes,address)",
                         address(this),
-                        account_,
+                        _msgSender(),
                         soul_,
                         nonce_
                     )
@@ -254,12 +253,9 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
             )
         )
     {
-        require(
-            signer_ == owner() || isAdministrator(signer_),
-            SoulErrorCodes.InvalidSigner
-        );
-        _setSoulLogic(account_, soul_);
-        emit SetSoul(account_, soul_, nonce_, signer_);
+        require(isAdministrator(signer_), SoulErrorCodes.Unauthorized);
+        _setSoulLogic(_msgSender(), soul_);
+        emit SetSoul(_msgSender(), soul_, nonce_, signer_);
     }
 
     /**
@@ -292,7 +288,8 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
         require(currentSoul != NULL_SOUL, SoulErrorCodes.Unauthorized);
         SoulProfile storage soulProfile = _soulProfiles[currentSoul];
         uint256 memberIdx;
-        for (uint256 i = 0; i < soulProfile.count; i++) {
+        uint256 lastIdx = soulProfile.count - 1;
+        for (uint256 i = 0; i <= lastIdx; i++) {
             if (soulProfile.members[i] == account_) {
                 memberIdx = i;
                 break;
@@ -300,12 +297,10 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
         }
         // If the target account is not the last member in current soul profile member list,
         // assign the last member to this memberIdx & remove the last member
-        if (memberIdx != (soulProfile.count - 1)) {
-            soulProfile.members[memberIdx] = soulProfile.members[
-                soulProfile.count - 1
-            ];
+        if (memberIdx != (lastIdx)) {
+            soulProfile.members[memberIdx] = soulProfile.members[lastIdx];
         }
-        delete soulProfile.members[soulProfile.count - 1];
+        delete soulProfile.members[lastIdx];
         soulProfile.count -= 1;
         _souls[account_] = NULL_SOUL;
     }
