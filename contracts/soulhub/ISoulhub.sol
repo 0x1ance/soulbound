@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "./soulhub-manager/ISoulhubManager.sol";
+import "../soulhub-manager/ISoulhubManager.sol";
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 /**
@@ -56,9 +56,9 @@ interface ISoulhub is IERC165 {
     function setManager(address manager) external;
 
     /**
-     * @dev Check if the target account has a soulhub administrator role
+     * @dev Check if the target account is either owner or has a soulhub administrator role
      * @param account The target account to validate
-     * @return {Validation Result} TRUE if the address has a soulhub administrator role, and FALSE otherwise.
+     * @return {Validation Result} TRUE if the address is the owner or has a soulhub administrator role, and FALSE otherwise.
      *
      * Notes:
      * The account will be validated by the soul manager contract to check whether
@@ -115,7 +115,6 @@ interface ISoulhub is IERC165 {
      * @dev Bind an address to a soul, validate action by verified signature
      */
     function setSoul(
-        address account_,
         uint256 soul_,
         uint256 nonce_,
         bytes memory sig_,

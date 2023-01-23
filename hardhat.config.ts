@@ -54,7 +54,7 @@ const config: HardhatUserConfig = {
     artifacts: './artifacts',
   },
   typechain: {
-    outDir: './types',
+    outDir: './typechain-types',
     target: 'ethers-v5',
     alwaysGenerateOverloads: false,
     externalArtifacts: ['externalArtifacts/*.json'],

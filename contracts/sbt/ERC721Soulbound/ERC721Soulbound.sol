@@ -3,8 +3,8 @@ pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./IERC721Soulbound.sol";
-import "../../Soulbound.sol";
-import "../../soulhub/soulhub-manager/ISoulhubManager.sol";
+import "../../soulbound/Soulbound.sol";
+import "../../soulhub-manager/ISoulhubManager.sol";
 import "./lib/ERC721SoulboundErrorCodes.sol";
 
 /**

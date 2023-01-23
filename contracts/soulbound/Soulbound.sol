@@ -1,15 +1,16 @@
-// SPDX-L_soulhubicense-Identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
-import "./soulhub/ISoulhub.sol";
+import "../soulhub/ISoulhub.sol";
 import "./ISoulbound.sol";
 
 library SoulboundErrorCodes {
     string constant InvalidInterface = "Soulbound:InvalidInterface";
+    string constant InvalidAddress = "Soulbound:InvalidAddress";
     string constant NotOwnerOrSoulhubAdministrator =
-        "Soulbound:CallerIsNotOwnerOrSoulhubAdministrator";
+        "Soulbound:NotOwnerOrSoulhubAdministrator";
 }
 
 /**
@@ -68,7 +69,9 @@ contract Soulbound is Ownable, ERC165, ISoulbound {
      * * Operations:
      * * Initialize the _soulhub metadata
      */
-    constructor(address soulhub_) {
+    constructor(
+        address soulhub_
+    ) interfaceGuard(soulhub_, type(ISoulhub).interfaceId) {
         _soulhub = ISoulhub(soulhub_);
     }
 
@@ -97,6 +100,7 @@ contract Soulbound is Ownable, ERC165, ISoulbound {
      * ! Input account_ must supports the interface of interfaceId_
      */
     modifier interfaceGuard(address account_, bytes4 interfaceId_) {
+        require(account_ != address(0), SoulboundErrorCodes.InvalidAddress);
         // address must supports the target interface
         require(
             ERC165Checker.supportsInterface(account_, interfaceId_),
