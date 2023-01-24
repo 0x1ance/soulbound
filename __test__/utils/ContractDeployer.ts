@@ -66,7 +66,6 @@ class ContractDeployer {
     async Soulbound(
         { owner, manager, name = chance.string({ length: 8 }), soulhub }: SoulboundDeploymentConfig = {}
     ) {
-
         const [defaultOwner] = await ethers.getSigners()
         const targetOwner = owner ?? defaultOwner
         const targetSoulhubManager = manager ?? (await this.SoulhubManager({ owner: targetOwner }))[0]

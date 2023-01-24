@@ -1,10 +1,10 @@
 import { Chance } from 'chance';
 
 import { contractDeployer } from './../../utils/ContractDeployer';
-import { expect, assert } from 'chai'
-import { getInterfaceID } from '../../utils/getInterfaceId';
+import { expect } from 'chai'
 import { IERC165__factory, ISoulhub__factory } from '../../../typechain-types';
 import { ethers } from 'hardhat';
+import { generateInterfaceID, expectRevert } from '../../utils/contract-test-helpers';
 
 const chance = new Chance()
 
@@ -13,9 +13,8 @@ describe('UNIT TEST: Soulhub Contract - deployment', () => {
     const [soulhub] = await contractDeployer.Soulhub()
 
     const IERC165Interface = IERC165__factory.createInterface()
-    const IERC165InterfaceId = getInterfaceID(IERC165Interface)
     const ISoulhubInterface = ISoulhub__factory.createInterface()
-    const ISoulhubInterfaceId = getInterfaceID(ISoulhubInterface).xor(IERC165InterfaceId)
+    const ISoulhubInterfaceId = generateInterfaceID([ISoulhubInterface, IERC165Interface])
 
     expect(await soulhub.supportsInterface(ISoulhubInterfaceId._hex)).to.be.true
   })
@@ -32,12 +31,12 @@ describe('UNIT TEST: Soulhub Contract - deployment', () => {
     const [owner, falsyManager] = await ethers.getSigners()
     const name = chance.word({ length: 10 })
 
-    // @ts-ignore
-    return contractDeployer.Soulhub({ owner, name, manager: falsyManager })
-      .then(() => assert.fail())
-      .catch((err: any) => {
-        assert.include(err.message, 'Soulhub:InvalidInterface')
-      })
 
+    await expectRevert(
+      // @ts-ignore
+      contractDeployer.Soulhub({ owner, name, manager: falsyManager }),
+      'Soulhub:InvalidInterface'
+    )
   })
+
 })

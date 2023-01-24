@@ -1,5 +1,5 @@
 import { contractDeployer } from '../../utils/ContractDeployer';
-import { expect, assert } from 'chai'
+import { expect } from 'chai'
 import { ethers } from 'hardhat';
 
 const NULL_SOUL = 0

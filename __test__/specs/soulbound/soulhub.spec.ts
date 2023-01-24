@@ -1,10 +1,9 @@
 import { Chance } from 'chance';
 
 import { contractDeployer } from '../../utils/ContractDeployer';
-import { expect, assert } from 'chai'
-import { getInterfaceID } from '../../utils/getInterfaceId';
-import { IERC165__factory, ISoulbound__factory } from '../../../typechain-types';
+import { expect } from 'chai'
 import { ethers } from 'hardhat';
+import { expectFnReturnChange, expectRevert } from '../../utils/contract-test-helpers';
 
 const chance = new Chance()
 
@@ -21,25 +20,24 @@ describe('UNIT TEST: Soulbound Contract - soulhub & subscribeSoulhub', () => {
 
   it('subscribeSoulhub: should throw error if the caller is not owner', async () => {
     const [owner, notOwner] = await ethers.getSigners()
-    const [soulbound, soulhub] = await contractDeployer.Soulbound({ owner })
+    const [soulbound] = await contractDeployer.Soulbound({ owner })
     const [newSoulhub] = await contractDeployer.Soulhub({ owner })
 
-    return soulbound.connect(notOwner).subscribeSoulhub(newSoulhub.address)
-      .then(() => assert.fail())
-      .catch((err: any) => {
-        assert.include(err.message, 'Ownable: caller is not the owner')
-      })
+    await expectRevert(
+      soulbound.connect(notOwner).subscribeSoulhub(newSoulhub.address),
+      'Ownable: caller is not the owner'
+    )
   })
 
   it('subscribeSoulhub: should throw error input soulhub address does not supports ISoulhub interface', async () => {
     const [owner, falsySoulhub] = await ethers.getSigners()
     const [soulbound] = await contractDeployer.Soulbound({ owner })
 
-    return soulbound.connect(owner).subscribeSoulhub(falsySoulhub.address)
-      .then(() => assert.fail())
-      .catch((err: any) => {
-        assert.include(err.message, 'Soulbound:InvalidInterface')
-      })
+    await expectRevert(
+      soulbound.connect(owner).subscribeSoulhub(falsySoulhub.address),
+      'Soulbound:InvalidInterface'
+    )
+
   })
 
   it('subscribeSoulhub: should subscribe to the new soulhub contract', async () => {
@@ -47,12 +45,18 @@ describe('UNIT TEST: Soulbound Contract - soulhub & subscribeSoulhub', () => {
     const [soulbound, oldSoulhub] = await contractDeployer.Soulbound({ owner })
     const [newSoulhub] = await contractDeployer.Soulhub({ owner })
 
-    const before = await soulbound.soulhub()
-    await soulbound.connect(owner).subscribeSoulhub(newSoulhub.address)
-    const after = await soulbound.soulhub()
+    const [before, after] = await expectFnReturnChange(
+      soulbound.connect(owner).subscribeSoulhub,
+      [newSoulhub.address],
+      {
+        contract: soulbound,
+        functionSignature: 'soulhub',
+        params: [],
+        expectedBefore: oldSoulhub.address,
+        expectedAfter: newSoulhub.address
+      }
+    )
 
     expect(before).not.to.equal(after)
-    expect(before).to.equal(oldSoulhub.address)
-    expect(after).to.equal(newSoulhub.address)
   })
 })

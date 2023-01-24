@@ -21,6 +21,7 @@ import "../utils/SignatureHelper.sol";
  * data store for all the user data in the organization.
  */
 contract Soulhub is ISoulhub, ERC165, Ownable {
+    
     // ─── Metadata ────────────────────────────────────────────────────────
 
     string public _name; // The name of the soulhub
