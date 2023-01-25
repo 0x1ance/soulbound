@@ -1,8 +1,30 @@
 {
-  "name": "@lumox/moxport",
-  "description": "Lumox Moxport smart contract",
-  "author": "0x1ance",
+  "name": "@0x1ance/soulbound",
+  "version": "1.0.0",
+  "description": "Soulbound smart contract implemented by 0x1ance",
+  "keywords": [
+    "soulbound",
+    "smart contract",
+    "ethereum",
+    "solidity",
+    "dapp",
+    "desoc",
+    "web3",
+    "soul"
+  ],
+  "homepage": "https://github.com/0x1ance/soulbound#readme",
+  "bugs": {
+    "url": "https://github.com/0x1ance/soulbound/issues"
+  },
   "license": "MIT",
+  "author": {
+    "name": "0x1ance",
+    "email": "tsanglance@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0x1ance/soulbound.git"
+  },
   "scripts": {
     "compile": "dotenv -e .env.development -- yarn hardhat compile",
     "test": "hardhat test",
