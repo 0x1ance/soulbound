@@ -2,23 +2,39 @@
 
 This implementation of Soulbound Standard is my humble contribution to the bright future of web3 society, inspired by Vitalik Buterin's SBT whitepaper (Decentralized Society: Finding Web3's Soul) at https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763, and his blog https://vitalik.ca/general/2022/01/26/soulbound.html.
 
-The main purpose of this project is to deliver an easy, understandable introduction of the decentralized society (DeSoc) & soulbound token (SBT) to the general web3 developers.
+## Install
 
-My excitement about how we can shape the future web3 society as a blockchain/web3 engineer is beyond words. Great thanks to the talented team & Vitalik Buterin for publishing such an inspiring paper over DeSoc, which paves the way for the web3 community to transform our ecosystem into a more organized and structural way.
+```
+npm install @0x1ance/soulbound
+```
 
-There's still much room for improvement in the code, therefore it is highly welcomed to open issues and discussions on how can we construct the future decentralized society in a better way, &
-bring a more inclusive Soulbound standard for everyone to adopt easily.
+Or if you use yarn
 
-## Thoughts by 0x1ance towards Vitalik Buterin's thought-provoking SBT whitepaper
+```
+yarn add @0x1ance/soulbound
+```
 
-To design a more organized, manageable web3 society for the general public, meanwhile reaching an equilibrium between centralization & decentralization (or **privacy & transparency**), SBT is a brilliant intermediate for us to structure the web3 society.
+## Usage
 
-I would like to perceive the whole blockchain as the general ledger, while the soulhub contract of each organization (governments, companies, private societies, etc.) is a sub-ledger. Everything that happened within the sub-ledger is fully controlled by the organization, while the output of each sub-ledger can be viewed as a summary of all the user activities. Through the soulbound subscription pattern, we can explore two information flows:
+To write your custom contracts, import ours and extend them through inheritance.
 
-1. **top-down**: instructions from top to lower hierarchy, like soulbound contracts with activities fully managed by the soulhub organization
-2. **bottom-up**: information feed from low/equal up to high hierarchy (data consumer), soulbound contracts only consume the user validation result from soulhub to perform their business logic but not controlled by the soulhub
+```solidity
+pragma solidity 0.8.17;
 
-Meanwhile, the relationship doesn`t have to be unidirectional, which allows us to implement a more sophisticated & intelligent web3 network among different entities.
+import '@0x1ance/soulbound/contracts/sbt/ERC721SoulBound/ERC721SoulBound.sol';
+
+contract BoredGorillaERC721Soulbound is ERC721Soulbound {
+    constructor(
+        string memory name_,
+        string memory symbol_,
+        address soulhub_
+    ) ERC721Soulbound(name_, symbol_, soulhub_) {
+    }
+}
+```
+
+> Please refer to sbt/ERC721Soulbound & examples/WishERC721Soulbound
+> You need an ethereum development framework for the above import statements to work! Check out these guides for [Hardhat], [Truffle] or [Embark].
 
 # Concept Walkthrough
 
@@ -58,6 +74,30 @@ A soulbound contract is the satellite contract of the organizational soulhub con
 
 (2) leverages a reputable, trustable organizational soulhub contract for user identity/information verification (_e.g. to verify whether an address is an active, real person by checking if that address has a valid soul in a famous soulhub contract, etc._).
 
-# Examples
+## Thoughts by 0x1ance towards Vitalik Buterin's thought-provoking SBT whitepaper
 
-Please refer to the examples/WishERC721Soulbound
+To design a more organized, manageable web3 society for the general public, meanwhile reaching an equilibrium between centralization & decentralization (or **privacy & transparency**), SBT is a brilliant intermediate for us to structure the web3 society.
+
+I would like to perceive the whole blockchain as the general ledger, while the soulhub contract of each organization (governments, companies, private societies, etc.) is a sub-ledger. Everything that happened within the sub-ledger is fully controlled by the organization, while the output of each sub-ledger can be viewed as a summary of all the user activities. Through the soulbound subscription pattern, we can explore two information flows:
+
+1. **top-down**: instructions from top to lower hierarchy, like soulbound contracts with activities fully managed by the soulhub organization
+2. **bottom-up**: information feed from low/equal up to high hierarchy (data consumer), soulbound contracts only consume the user validation result from soulhub to perform their business logic but not controlled by the soulhub
+
+Meanwhile, the relationship doesn`t have to be unidirectional, which allows us to implement a more sophisticated & intelligent web3 network among different entities.
+
+## Summary
+
+The main purpose of this project is to deliver an easy, understandable introduction of the decentralized society (DeSoc) & soulbound token (SBT) to the general web3 developers.
+
+My excitement about how we can shape the future web3 society as a blockchain/web3 engineer is beyond words. Great thanks to the talented team & Vitalik Buterin for publishing such an inspiring paper over DeSoc, which paves the way for the web3 community to transform our ecosystem into a more organized and structural way.
+
+There's still much room for improvement in the code, therefore it is highly welcomed to open issues and discussions on how can we construct the future decentralized society in a better way, &
+bring a more inclusive Soulbound standard for everyone to adopt easily.
+
+## License
+
+OpenZeppelin is released under the [MIT License](LICENSE).
+
+[Truffle]: https://truffleframework.com/docs/truffle/quickstart
+[Embark]: https://embark.status.im/docs/quick_start.html
+[Hardhat]: https://hardhat.org/hardhat-runner/docs/getting-started
