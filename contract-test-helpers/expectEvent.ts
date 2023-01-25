@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { BaseContract, ethers } from "ethers";
-import { TypedEvent, TypedEventFilter } from "../../../typechain-types/common";
+import { TypedEvent, TypedEventFilter } from "../typechain-types/common";
 import { isBN } from "./utils";
 
 function contains(args: ethers.utils.Result | undefined, key: string, value: any) {
