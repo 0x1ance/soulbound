@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity 0.8.17;
 
 library SoulhubErrorCodes {
     string constant InvalidSoul = "Soulhub:InvalidSoul";
@@ -7,5 +7,4 @@ library SoulhubErrorCodes {
     string constant InvalidNonce = "Soulhub:InvalidNonce";
     string constant InvalidSigner = "Soulhub:InvalidSigner";
     string constant InvalidInterface = "Soulhub:InvalidInterface";
-    string constant InvalidAddress = "Soulhub:InvalidAddress";
 }

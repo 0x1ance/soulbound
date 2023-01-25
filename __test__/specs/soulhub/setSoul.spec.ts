@@ -1,8 +1,7 @@
-import { SetSoul_address_uint256_EventObject, Soulhub } from './../../../typechain-types/contracts/soulhub/Soulhub';
 import { contractDeployer } from '../../utils/ContractDeployer';
 import { expect } from 'chai'
 import { ethers } from 'hardhat';
-import { expectRevert, expectEvent, expectFnReturnChange } from '../../utils/contract-test-helpers';
+import { expectRevert, expectEvent, expectFnReturnChange } from '../../../contract-test-helpers';
 import { generateSignature } from '../../utils/hardhat-helpers';
 import { NULL_SOUL } from '../../utils/const';
 

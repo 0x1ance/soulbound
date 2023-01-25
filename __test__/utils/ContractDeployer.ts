@@ -23,8 +23,6 @@ type SoulboundDeploymentConfig = ContractDeploymentBaseConfig & SoulhubDeploymen
 
 class ContractDeployer {
 
-    signatureHelper?: SignatureHelper
-
     async SoulhubManager(
         { owner }: ContractDeploymentBaseConfig = {}
     ) {
@@ -41,15 +39,8 @@ class ContractDeployer {
     async Soulhub(
         { owner, manager, name = chance.string({ length: 8 }) }: SoulhubDeploymentConfig = {}
     ) {
-        if (!this.signatureHelper) {
-            const signatureHelperContractFactory = await ethers.getContractFactory('SignatureHelper')
-            this.signatureHelper = (await signatureHelperContractFactory.deploy()) as SignatureHelper
-        }
         const [defaultOwner] = await ethers.getSigners()
         const contractFactory = await ethers.getContractFactory('Soulhub', {
-            libraries: {
-                SignatureHelper: this.signatureHelper.address
-            }
         })
         const targetOwner = owner ?? defaultOwner
         const targetSoulhubManager = manager ?? (await this.SoulhubManager({ owner: targetOwner }))[0]

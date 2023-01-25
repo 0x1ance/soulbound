@@ -3,7 +3,7 @@ import { contractDeployer } from './../../utils/ContractDeployer';
 import { expect } from 'chai'
 import { IERC165__factory, ISoulhubManager__factory } from '../../../typechain-types';
 import { ethers } from 'hardhat';
-import { generateInterfaceID } from '../../utils/contract-test-helpers';
+import { generateInterfaceID } from '../../../contract-test-helpers';
 
 describe('UNIT TEST: Soulhub Manager Contract - deployment', () => {
   it('deployment: should support ISoulhubManager interface', async () => {

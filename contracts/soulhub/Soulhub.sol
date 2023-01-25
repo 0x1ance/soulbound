@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity 0.8.17;
+
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 import "./ISoulhub.sol";
 import "../soulhub-manager/ISoulhubManager.sol";
 import "./lib/SoulhubErrorCodes.sol";
-import "../utils/SignatureHelper.sol";
 
 /**
  * @dev [Author:0x1ance] Implementation of Soulhub contract mentioned in the {Soulbound - Soulhub Contract}
@@ -21,7 +23,10 @@ import "../utils/SignatureHelper.sol";
  * data store for all the user data in the organization.
  */
 contract Soulhub is ISoulhub, ERC165, Ownable {
-    
+    using ECDSA for bytes32;
+    using ERC165Checker for address;
+    using Counters for Counters.Counter;
+
     // ─── Metadata ────────────────────────────────────────────────────────
 
     string public _name; // The name of the soulhub
@@ -38,7 +43,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
     /**
      * Access Right Management
      */
-    mapping(address => uint256) internal _nonces; // Mapping from account to its current consumable nonce
+    mapping(address => Counters.Counter) internal _nonces; // Mapping from account to its current consumable nonce
 
     /**
      *  Soul Management
@@ -78,9 +83,8 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
      * ! Input account_ must supports the interface of interfaceId_
      */
     modifier interfaceGuard(address account_, bytes4 interfaceId_) {
-        require(account_ != address(0), SoulhubErrorCodes.InvalidAddress);
         require(
-            ERC165Checker.supportsInterface(account_, interfaceId_),
+            account_.supportsInterface(interfaceId_),
             SoulhubErrorCodes.InvalidInterface
         );
         _;
@@ -100,7 +104,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
 
         _;
 
-        _nonces[account_] += 1;
+        _nonces[account_].increment();
     }
 
     /**
@@ -117,7 +121,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
         bytes32 msgHash_
     ) {
         require(
-            SignatureHelper.recoverSigner(msgHash_, sig_) == signer_,
+            msgHash_.toEthSignedMessageHash().recover(sig_) == signer_,
             SoulhubErrorCodes.InvalidSigner
         );
         _;
@@ -132,7 +136,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
      * @return {Current Consumable Nonce}
      */
     function nonce(address account_) public view returns (uint256) {
-        return _nonces[account_];
+        return _nonces[account_].current();
     }
 
     /**
@@ -241,15 +245,13 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
         signatureGuard(
             sig_,
             signer_,
-            SignatureHelper.prefixed(
-                keccak256(
-                    abi.encodePacked(
-                        "setSoul(uint256,uint256,bytes,address)",
-                        address(this),
-                        _msgSender(),
-                        soul_,
-                        nonce_
-                    )
+            keccak256(
+                abi.encodePacked(
+                    "setSoul(uint256,uint256,bytes,address)",
+                    address(this),
+                    _msgSender(),
+                    soul_,
+                    nonce_
                 )
             )
         )
