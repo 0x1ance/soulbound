@@ -97,7 +97,7 @@ bring a more inclusive Soulbound standard for everyone to adopt easily.
 
 ## License
 
-OpenZeppelin is released under the [MIT License](LICENSE).
+This contract is is released under the [MIT License](LICENSE).
 
 [Truffle]: https://truffleframework.com/docs/truffle/quickstart
 [Embark]: https://embark.status.im/docs/quick_start.html
