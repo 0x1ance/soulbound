@@ -2,7 +2,7 @@ import { SoulhubManager } from './../../typechain-types/contracts/soulhub-manage
 import { ethers } from 'hardhat'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import Chance from 'chance'
-import { SignatureHelper, Soulbound, Soulhub } from '../../typechain-types';
+import { Soulbound, Soulhub } from '../../typechain-types';
 import { LogLevel } from '@ethersproject/logger'
 
 ethers.utils.Logger.setLogLevel(LogLevel.ERROR);
