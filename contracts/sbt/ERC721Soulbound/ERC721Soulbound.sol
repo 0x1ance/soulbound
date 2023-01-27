@@ -2,7 +2,6 @@
 pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "./IERC721Soulbound.sol";
 import "../../soulbound/Soulbound.sol";
 import "../../soulhub-manager/ISoulhubManager.sol";
 import "./lib/ERC721SoulboundErrorCodes.sol";
@@ -14,7 +13,7 @@ import "./lib/ERC721SoulboundErrorCodes.sol";
  * Each soul will registered to a soulhub, which will validate whether a specific address has been granted a soulhub administrator role of this sole, if an address has
  * a soul verifer role, every signature signed by this address can be trusted by those contracts soulbounded to this soul
  */
-abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
+abstract contract ERC721Soulbound is ERC721, Soulbound {
     // ─── Variables ───────────────────────────────────────────────────────────────
 
     mapping(uint256 => uint256) private _soulBalances; // Mapping soul to token balance
@@ -60,9 +59,12 @@ abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
     /**
      * @dev See {IERC721Soulbound-balanceOfSoul} Get the token balance of a soul
      */
-    function balanceOfSoul(
-        uint256 soul_
-    ) public view virtual returns (uint256) {
+    function balanceOfSoul(uint256 soul_)
+        public
+        view
+        virtual
+        returns (uint256)
+    {
         return _soulBalances[soul_];
     }
 
@@ -77,7 +79,7 @@ abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
         address to_,
         uint256 tokenId_,
         uint256 batchSize_
-    ) internal override(ERC721) {
+    ) internal virtual override(ERC721) {
         require(
             _checkTokenTransferEligibility(from_, to_, tokenId_),
             ERC721SoulboundErrorCodes.Unauthorized
@@ -97,12 +99,14 @@ abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
     /**
      * @dev See {IERC165-supportsInterface}
      */
-    function supportsInterface(
-        bytes4 interfaceId_
-    ) public view virtual override(ERC721, IERC165, Soulbound) returns (bool) {
-        return
-            interfaceId_ == type(IERC721Soulbound).interfaceId ||
-            super.supportsInterface(interfaceId_);
+    function supportsInterface(bytes4 interfaceId_)
+        public
+        view
+        virtual
+        override(Soulbound, ERC721)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId_);
     }
 
     // ─────────────────────────────────────────────────────────────────────

@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "../contracts/sbt/ERC721SoulBound/ERC721SoulBound.sol";
+import "../sbt/ERC721Soulbound/ERC721Soulbound.sol";
 
 /**
  * @dev [Author:0x1ance] Example of an ERC721 token adopting ERC721Soulbound standard
@@ -14,16 +12,11 @@ import "../contracts/sbt/ERC721SoulBound/ERC721SoulBound.sol";
  * This contract serves as a comprehensive example of:
  * (1) Implementing customized _checkTokenTransferEligibility based on the business
  * requirements & operational flows.
- * (2) Demonstating how a soulbound contract can be managed by the soulhub
+ * (2) Demonstating how a soulbound contract can be fully managed by the soulhub
  * administrator by customizing the mint/burn/_beforeTokenTransfer functions of the
- * original ERC721 standard,
- *
+ * original ERC721 standard.
  */
-contract BoredGorillaERC721Soulbound is
-    ERC721Soulbound,
-    ERC721Pausable,
-    ERC721Enumerable
-{
+contract TestERC721Soulbound is ERC721Soulbound {
     // ─── Events ──────────────────────────────────────────────────────────────────
 
     event Mint(address indexed to_, uint256 indexed tokenId_);
@@ -33,7 +26,7 @@ contract BoredGorillaERC721Soulbound is
     // ─────────────────────────────────────────────────────────────────────────────
     // ─── Metadata ────────────────────────────────────────────────────────
 
-    string public _uri; // baseURI of the ERC721 metadata
+    string private _uri; // baseURI of the ERC721 metadata
 
     // ─────────────────────────────────────────────────────────────────────
     // ─── Variables ───────────────────────────────────────────────────────────────
@@ -94,24 +87,6 @@ contract BoredGorillaERC721Soulbound is
     // ─── external Functions ────────────────────────────────────────────────
 
     /**
-     * @dev Pause the contract
-     * ! Requirements:
-     * ! The caller must be the owner
-     */
-    function pause() external onlyOwner {
-        _pause();
-    }
-
-    /**
-     * @dev Unpause the contract
-     * ! Requirements:
-     * ! The caller must be the owner
-     */
-    function unpause() external onlyOwner {
-        _unpause();
-    }
-
-    /**
      * @dev [Metadata] Set the baseURI of the contract
      * @param uri_ The new baseURI
      * ! Requirements:
@@ -124,25 +99,6 @@ contract BoredGorillaERC721Soulbound is
     }
 
     /**
-     * @dev Returns all the tokens owned by an account
-     * @param account_ The target account
-     * @return {List of Owned Tokens}
-     */
-    function tokensOfOwner(
-        address account_
-    ) external view returns (uint256[] memory) {
-        uint256 ownerTokenCount = balanceOf(account_);
-
-        uint256[] memory ownedTokens = new uint256[](ownerTokenCount);
-
-        for (uint256 i = 0; i < ownerTokenCount; i++) {
-            ownedTokens[i] = tokenOfOwnerByIndex(account_, i);
-        }
-
-        return ownedTokens;
-    }
-
-    /**
      * @dev Mint a token
      * @param to_ The target account where the token will be minted to
      * @param tokenId_ The target tokenId
@@ -150,10 +106,11 @@ contract BoredGorillaERC721Soulbound is
      * ! This contract must not be paused.
      * ! The caller must be either the owner or the soulhub administrators
      */
-    function mint(
-        address to_,
-        uint256 tokenId_
-    ) external whenNotPaused onlyOwnerOrSoulhubAdministrator returns (bool) {
+    function mint(address to_, uint256 tokenId_)
+        external
+        onlyOwnerOrSoulhubAdministrator
+        returns (bool)
+    {
         _mint(to_, tokenId_);
         emit Mint(to_, tokenId_);
         return true;
@@ -167,9 +124,11 @@ contract BoredGorillaERC721Soulbound is
      * ! This contract must not be paused.
      * ! The caller must be either the owner or the soulhub administrators
      */
-    function burn(
-        uint256 tokenId_
-    ) external whenNotPaused onlyOwnerOrSoulhubAdministrator returns (bool) {
+    function burn(uint256 tokenId_)
+        external
+        onlyOwnerOrSoulhubAdministrator
+        returns (bool)
+    {
         _burn(tokenId_);
         emit Burn(tokenId_);
         return true;
@@ -184,10 +143,11 @@ contract BoredGorillaERC721Soulbound is
      * ! This contract must not be paused.
      * ! The caller must be either the owner or the soulhub administrators
      */
-    function setTransferable(
-        uint256 tokenId_,
-        bool status_
-    ) external whenNotPaused onlyOwnerOrSoulhubAdministrator returns (bool) {
+    function setTransferable(uint256 tokenId_, bool status_)
+        external
+        onlyOwnerOrSoulhubAdministrator
+        returns (bool)
+    {
         _requireMinted(tokenId_);
         _transferable[tokenId_] = status_;
         emit SetTransferrable(tokenId_, status_);
@@ -205,24 +165,18 @@ contract BoredGorillaERC721Soulbound is
         address to_,
         uint256 tokenId_,
         uint256 batchSize_
-    )
-        internal
-        virtual
-        override(ERC721Pausable, ERC721Enumerable, ERC721Soulbound)
-    {
+    ) internal override(ERC721Soulbound) {
         super._beforeTokenTransfer(from_, to_, tokenId_, batchSize_);
     }
 
     /**
-     * @dev See {IERC165-supportsInterface}.
+     * @dev See {IERC165-supportsInterface}
      */
-    function supportsInterface(
-        bytes4 interfaceId_
-    )
+    function supportsInterface(bytes4 interfaceId_)
         public
         view
         virtual
-        override(ERC721, ERC721Enumerable, ERC721Soulbound)
+        override(ERC721Soulbound)
         returns (bool)
     {
         return super.supportsInterface(interfaceId_);
