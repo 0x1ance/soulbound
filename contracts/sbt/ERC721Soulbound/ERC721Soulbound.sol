@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../../soulbound/Soulbound.sol";
 import "../../soulhub-manager/ISoulhubManager.sol";
 import "./lib/ERC721SoulboundErrorCodes.sol";
+import "./IERC721Soulbound.sol";
 
 /**
  * @dev [Author:0x1ance] Implementation of Soulbound ERC721 Core contract
@@ -13,7 +14,7 @@ import "./lib/ERC721SoulboundErrorCodes.sol";
  * Each soul will registered to a soulhub, which will validate whether a specific address has been granted a soulhub administrator role of this sole, if an address has
  * a soul verifer role, every signature signed by this address can be trusted by those contracts soulbounded to this soul
  */
-abstract contract ERC721Soulbound is ERC721, Soulbound {
+abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
     // ─── Variables ───────────────────────────────────────────────────────────────
 
     mapping(uint256 => uint256) private _soulBalances; // Mapping soul to token balance
@@ -103,10 +104,12 @@ abstract contract ERC721Soulbound is ERC721, Soulbound {
         public
         view
         virtual
-        override(Soulbound, ERC721)
+        override(Soulbound, ERC721, IERC165)
         returns (bool)
     {
-        return super.supportsInterface(interfaceId_);
+        return
+            interfaceId_ == type(IERC721Soulbound).interfaceId ||
+            super.supportsInterface(interfaceId_);
     }
 
     // ─────────────────────────────────────────────────────────────────────

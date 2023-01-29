@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "../sbt/ERC721Soulbound/ERC721Soulbound.sol";
 
@@ -34,7 +33,7 @@ contract TestERC721Soulbound is ERC721Soulbound {
     /**
      *  Token Management
      */
-    mapping(uint256 => bool) _transferable; // Mapping from tokenId to transferability
+    mapping(uint256 => bool) _locked; // Mapping from tokenId to locked status, if true then locked
 
     // ─────────────────────────────────────────────────────────────────────────────
     // ─── Constructor ─────────────────────────────────────────────────────────────
@@ -79,8 +78,8 @@ contract TestERC721Soulbound is ERC721Soulbound {
             return _checkOwnerOrSoulhubAdministrator(_msgSender());
         }
 
-        // only allow transferable tokens to be transferred under same soul
-        return _transferable[tokenId_] && _checkSameSoul(from_, to_);
+        // only allow not locked tokens to be transferred under same soul
+        return !_locked[tokenId_] && _checkSameSoul(from_, to_);
     }
 
     // ─────────────────────────────────────────────────────────────────────────────
@@ -143,13 +142,13 @@ contract TestERC721Soulbound is ERC721Soulbound {
      * ! This contract must not be paused.
      * ! The caller must be either the owner or the soulhub administrators
      */
-    function setTransferable(uint256 tokenId_, bool status_)
+    function setTokenLockStatus(uint256 tokenId_, bool status_)
         external
         onlyOwnerOrSoulhubAdministrator
         returns (bool)
     {
         _requireMinted(tokenId_);
-        _transferable[tokenId_] = status_;
+        _locked[tokenId_] = status_;
         emit SetTransferrable(tokenId_, status_);
         return true;
     }

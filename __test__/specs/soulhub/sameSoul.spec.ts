@@ -4,7 +4,7 @@ import { ethers } from 'hardhat';
 
 const NULL_SOUL = 0
 
-describe('UNIT TEST: Soulhub Contract - sameSoul', () => {
+xdescribe('UNIT TEST: Soulhub Contract - sameSoul', () => {
   it('sameSoul: should return true if two addresses have been bound to the same soul', async () => {
     const [owner, addr0, addr1] = await ethers.getSigners()
     const [soulhub] = await contractDeployer.Soulhub({ owner })

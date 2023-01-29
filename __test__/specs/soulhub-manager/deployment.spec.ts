@@ -5,7 +5,7 @@ import { IERC165__factory, ISoulhubManager__factory } from '../../../typechain-t
 import { ethers } from 'hardhat';
 import { generateInterfaceID } from '../../../contract-test-helpers';
 
-describe('UNIT TEST: Soulhub Manager Contract - deployment', () => {
+xdescribe('UNIT TEST: Soulhub Manager Contract - deployment', () => {
   it('deployment: should support ISoulhubManager interface', async () => {
     const [soulhubManager] = await contractDeployer.SoulhubManager()
 

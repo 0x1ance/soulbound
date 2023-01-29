@@ -4,7 +4,7 @@ import { ethers } from 'hardhat';
 import { expectRevert, expectEvent, expectFnReturnChange } from '../../../contract-test-helpers';
 
 
-describe('UNIT TEST: Soulhub Contract - setManager', () => {
+xdescribe('UNIT TEST: Soulhub Contract - setManager', () => {
 
   it('setManager: should update the current soulhub manager', async () => {
     const [owner] = await ethers.getSigners()

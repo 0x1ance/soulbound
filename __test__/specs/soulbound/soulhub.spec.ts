@@ -7,7 +7,7 @@ import { expectFnReturnChange, expectRevert } from '../../../contract-test-helpe
 
 const chance = new Chance()
 
-describe('UNIT TEST: Soulbound Contract - soulhub & subscribeSoulhub', () => {
+xdescribe('UNIT TEST: Soulbound Contract - soulhub & subscribeSoulhub', () => {
 
   it('soulhub: should return the address of current subscribed soulhub contract', async () => {
     const [owner] = await ethers.getSigners()

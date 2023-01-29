@@ -26,6 +26,7 @@
     "url": "https://github.com/0x1ance/soulbound.git"
   },
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "compile": "dotenv -e .env.development -- yarn hardhat compile",
     "test": "hardhat test",
     "coverage": "hardhat coverage",
@@ -62,6 +63,7 @@
   },
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/logger": "^5.7.0",
     "@openzeppelin/contracts": "^4.8.0",
     "@openzeppelin/contracts-upgradeable": "^4.8.0",
     "date-fns": "^2.29.2",

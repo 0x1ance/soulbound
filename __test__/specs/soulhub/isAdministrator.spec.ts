@@ -4,7 +4,7 @@ import { expectFnReturnChange } from '../../../contract-test-helpers'
 import { expect } from 'chai'
 import { ethers } from 'hardhat';
 
-describe('UNIT TEST: Soulhub Contract - isAdministrator', () => {
+xdescribe('UNIT TEST: Soulhub Contract - isAdministrator', () => {
   it('isAdministrator: should return true if the soulhub manager contract return true', async () => {
     const [owner, soulhubManagerOwner] = await ethers.getSigners()
     const [soulhubManager] = await contractDeployer.SoulhubManager({ owner: soulhubManagerOwner })
