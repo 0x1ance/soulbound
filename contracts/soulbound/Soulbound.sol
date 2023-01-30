@@ -62,7 +62,7 @@ contract Soulbound is Ownable, ERC165, ISoulbound {
 
     // ─── Metadata ────────────────────────────────────────────────────────────────
 
-    ISoulhub private _soulhub; // subscribed soulhub contract
+    ISoulhub internal _soulhub; // subscribed soulhub contract
 
     // ─────────────────────────────────────────────────────────────────────────────
     // ─── Constructor ─────────────────────────────────────────────────────────────

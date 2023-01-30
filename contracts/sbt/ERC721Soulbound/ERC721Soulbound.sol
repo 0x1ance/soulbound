@@ -2,10 +2,12 @@
 pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "./IERC721Soulbound.sol";
 import "../../soulbound/Soulbound.sol";
 import "../../soulhub-manager/ISoulhubManager.sol";
 import "./lib/ERC721SoulboundErrorCodes.sol";
+import "./IERC721Soulbound.sol";
+
+import "hardhat/console.sol";
 
 /**
  * @dev [Author:0x1ance] Implementation of Soulbound ERC721 Core contract
@@ -15,10 +17,6 @@ import "./lib/ERC721SoulboundErrorCodes.sol";
  * a soul verifer role, every signature signed by this address can be trusted by those contracts soulbounded to this soul
  */
 abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
-    // ─── Variables ───────────────────────────────────────────────────────────────
-
-    mapping(uint256 => uint256) private _soulBalances; // Mapping soul to token balance
-
     // ─────────────────────────────────────────────────────────────────────────────
     // ─── Constructor ─────────────────────────────────────────────────────────────
 
@@ -60,10 +58,18 @@ abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
     /**
      * @dev See {IERC721Soulbound-balanceOfSoul} Get the token balance of a soul
      */
-    function balanceOfSoul(
-        uint256 soul_
-    ) public view virtual returns (uint256) {
-        return _soulBalances[soul_];
+    function balanceOfSoul(uint256 soul_)
+        public
+        view
+        virtual
+        returns (uint256)
+    {
+        address[] memory members = _soulhub.soulMembers(soul_);
+        uint256 totalBalance = 0;
+        for (uint256 i = 0; i < members.length; i++) {
+            totalBalance += balanceOf(members[i]);
+        }
+        return totalBalance;
     }
 
     // ─────────────────────────────────────────────────────────────────────
@@ -77,29 +83,24 @@ abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
         address to_,
         uint256 tokenId_,
         uint256 batchSize_
-    ) internal override(ERC721) {
+    ) internal virtual override(ERC721) {
         require(
             _checkTokenTransferEligibility(from_, to_, tokenId_),
             ERC721SoulboundErrorCodes.Unauthorized
         );
-
-        if (batchSize_ > 1) {
-            if (from_ != address(0)) {
-                _soulBalances[_soulOf(from_)] -= batchSize_;
-            }
-            if (to_ != address(0)) {
-                _soulBalances[_soulOf(to_)] += batchSize_;
-            }
-        }
         super._beforeTokenTransfer(from_, to_, tokenId_, batchSize_);
     }
 
     /**
      * @dev See {IERC165-supportsInterface}
      */
-    function supportsInterface(
-        bytes4 interfaceId_
-    ) public view virtual override(ERC721, IERC165, Soulbound) returns (bool) {
+    function supportsInterface(bytes4 interfaceId_)
+        public
+        view
+        virtual
+        override(Soulbound, ERC721, IERC165)
+        returns (bool)
+    {
         return
             interfaceId_ == type(IERC721Soulbound).interfaceId ||
             super.supportsInterface(interfaceId_);

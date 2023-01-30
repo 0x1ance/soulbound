@@ -2,7 +2,7 @@ import { SoulhubManager } from './../../typechain-types/contracts/soulhub-manage
 import { ethers } from 'hardhat'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import Chance from 'chance'
-import { Soulbound, Soulhub } from '../../typechain-types';
+import { Soulbound, Soulhub, TestERC721Soulbound } from '../../typechain-types';
 import { LogLevel } from '@ethersproject/logger'
 
 ethers.utils.Logger.setLogLevel(LogLevel.ERROR);
@@ -19,6 +19,14 @@ type SoulhubDeploymentConfig = ContractDeploymentBaseConfig & {
 
 type SoulboundDeploymentConfig = ContractDeploymentBaseConfig & SoulhubDeploymentConfig & {
     soulhub?: Soulhub
+}
+
+type TestERC721SoulboundDeploymentConfig = ContractDeploymentBaseConfig & SoulhubDeploymentConfig & {
+    soulhub?: Soulhub
+    manager?: SoulhubManager
+    name?: string,
+    symbol?: string,
+    uri?: string
 }
 
 class ContractDeployer {
@@ -70,6 +78,29 @@ class ContractDeployer {
 
         return [soulbound, targetSoulhub, targetSoulhubManager, targetOwner] as [
             Soulbound,
+            Soulhub,
+            SoulhubManager,
+            SignerWithAddress,
+        ]
+    }
+    async TestERC721Soulbound(
+        { owner, manager, name = chance.string({ length: 8 }), symbol = chance.string({ length: 8 }), uri = chance.domain({ length: 8 }), soulhub }: TestERC721SoulboundDeploymentConfig = {}
+    ) {
+        const [defaultOwner] = await ethers.getSigners()
+        const targetOwner = owner ?? defaultOwner
+        const targetSoulhubManager = manager ?? (await this.SoulhubManager({ owner: targetOwner }))[0]
+        const targetSoulhub = soulhub ?? (await this.Soulhub({ owner: targetOwner, manager: targetSoulhubManager, name }))[0]
+
+        const contractFactory = await ethers.getContractFactory('TestERC721Soulbound', {
+        })
+        const testERC721Soulbound = await contractFactory.connect(targetOwner).deploy(
+            name,
+            symbol,
+            uri,
+            targetSoulhub.address
+        )
+        return [testERC721Soulbound, targetSoulhub, targetSoulhubManager, targetOwner] as [
+            TestERC721Soulbound,
             Soulhub,
             SoulhubManager,
             SignerWithAddress,
