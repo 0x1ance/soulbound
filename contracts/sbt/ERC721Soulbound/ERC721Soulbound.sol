@@ -7,6 +7,8 @@ import "../../soulhub-manager/ISoulhubManager.sol";
 import "./lib/ERC721SoulboundErrorCodes.sol";
 import "./IERC721Soulbound.sol";
 
+import "hardhat/console.sol";
+
 /**
  * @dev [Author:0x1ance] Implementation of Soulbound ERC721 Core contract
  *
@@ -15,10 +17,6 @@ import "./IERC721Soulbound.sol";
  * a soul verifer role, every signature signed by this address can be trusted by those contracts soulbounded to this soul
  */
 abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
-    // ─── Variables ───────────────────────────────────────────────────────────────
-
-    mapping(uint256 => uint256) private _soulBalances; // Mapping soul to token balance
-
     // ─────────────────────────────────────────────────────────────────────────────
     // ─── Constructor ─────────────────────────────────────────────────────────────
 
@@ -66,7 +64,12 @@ abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
         virtual
         returns (uint256)
     {
-        return _soulBalances[soul_];
+        address[] memory members = _soulhub.soulMembers(soul_);
+        uint256 totalBalance = 0;
+        for (uint256 i = 0; i < members.length; i++) {
+            totalBalance += balanceOf(members[i]);
+        }
+        return totalBalance;
     }
 
     // ─────────────────────────────────────────────────────────────────────
@@ -85,15 +88,6 @@ abstract contract ERC721Soulbound is ERC721, Soulbound, IERC721Soulbound {
             _checkTokenTransferEligibility(from_, to_, tokenId_),
             ERC721SoulboundErrorCodes.Unauthorized
         );
-
-        if (batchSize_ > 1) {
-            if (from_ != address(0)) {
-                _soulBalances[_soulOf(from_)] -= batchSize_;
-            }
-            if (to_ != address(0)) {
-                _soulBalances[_soulOf(to_)] += batchSize_;
-            }
-        }
         super._beforeTokenTransfer(from_, to_, tokenId_, batchSize_);
     }
 

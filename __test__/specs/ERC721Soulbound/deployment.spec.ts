@@ -9,7 +9,7 @@ import { ethers } from 'hardhat';
 
 const chance = new Chance()
 
-xdescribe('UNIT TEST: ERC721Soulbound Contract - deployment', () => {
+describe('UNIT TEST: ERC721Soulbound Contract - deployment', () => {
   it('deployment: should support the IERC164, ISoulbound, IERC721 & IERC721Soulbound interface', async () => {
     const [testERC721Soulbound] = await contractDeployer.TestERC721Soulbound()
 

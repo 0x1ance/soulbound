@@ -3,7 +3,7 @@ import { contractDeployer } from '../../utils/ContractDeployer';
 import { expect } from 'chai'
 import { ethers } from 'hardhat';
 
-xdescribe('UNIT TEST: Soulhub Manager Contract - isAdministrator', () => {
+describe('UNIT TEST: Soulhub Manager Contract - isAdministrator', () => {
   it('isAdministrator: should return true for the owner address', async () => {
     const [owner] = await ethers.getSigners()
     const [soulhubManager] = await contractDeployer.SoulhubManager({ owner })

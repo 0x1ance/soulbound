@@ -9,7 +9,7 @@ import { ethers } from 'hardhat';
 
 const chance = new Chance()
 
-xdescribe('UNIT TEST: Soulbound Contract - deployment', () => {
+describe('UNIT TEST: Soulbound Contract - deployment', () => {
   it('deployment: should support ISoulbound interface', async () => {
     const [soulbound] = await contractDeployer.Soulbound()
 
