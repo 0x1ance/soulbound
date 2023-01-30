@@ -1,6 +1,6 @@
 {
   "name": "@0x1ance/soulbound",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Soulbound smart contract implemented by 0x1ance",
   "keywords": [
     "soulbound",
