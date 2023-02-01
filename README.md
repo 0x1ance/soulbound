@@ -5,13 +5,13 @@ This implementation of Soulbound Standard is my humble contribution to the brigh
 ## Install
 
 ```
-npm install @0x1ance/soulbound
+npm install soulbound:@0x1ance/soulbound
 ```
 
 Or if you use yarn
 
 ```
-yarn add @0x1ance/soulbound
+yarn add soulbound:@0x1ance/soulbound
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ To write your custom contracts, import ours and extend them through inheritance.
 ```solidity
 pragma solidity 0.8.17;
 
-import '@0x1ance/soulbound/contracts/sbt/ERC721SoulBound/ERC721SoulBound.sol';
+import 'soulbound/contracts/sbt/ERC721SoulBound/ERC721SoulBound.sol';
 
 contract BoredGorillaERC721Soulbound is ERC721Soulbound {
     constructor(
