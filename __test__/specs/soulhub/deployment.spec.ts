@@ -4,7 +4,7 @@ import { contractDeployer } from './../../utils/ContractDeployer';
 import { expect } from 'chai'
 import { IERC165__factory, ISoulhub__factory } from '../../../typechain-types';
 import { ethers } from 'hardhat';
-import { generateInterfaceID, expectRevert } from '../../../contract-test-helpers';
+import { generateInterfaceID, expectRevert } from '../../../ethers-test-helpers';
 
 const chance = new Chance()
 

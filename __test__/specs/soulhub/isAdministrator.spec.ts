@@ -1,6 +1,6 @@
 
 import { contractDeployer } from '../../utils/ContractDeployer';
-import { expectFnReturnChange } from '../../../contract-test-helpers'
+import { expectFnReturnChange } from '../../../ethers-test-helpers'
 import { expect } from 'chai'
 import { ethers } from 'hardhat';
 

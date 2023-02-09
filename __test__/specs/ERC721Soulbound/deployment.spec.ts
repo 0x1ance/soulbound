@@ -1,7 +1,7 @@
 
 import { Chance } from 'chance';
 import { contractDeployer } from '../../utils/ContractDeployer';
-import { generateInterfaceID, expectRevert } from '../../../contract-test-helpers';
+import { generateInterfaceID, expectRevert } from '../../../ethers-test-helpers';
 import { expect } from 'chai'
 import { IERC165__factory, IERC721Soulbound__factory, IERC721__factory, ISoulbound__factory, } from '../../../typechain-types';
 import { ethers } from 'hardhat';

@@ -1,8 +1,8 @@
 import { contractDeployer } from '../../utils/ContractDeployer';
 import { expect } from 'chai'
 import { ethers } from 'hardhat';
-import { expectRevert, expectEvent, expectFnReturnChange } from '../../../contract-test-helpers';
-import { generateSignature } from '../../utils/hardhat-helpers';
+import { expectRevert, expectEvent, expectFnReturnChange } from '../../../ethers-test-helpers';
+import { generateSignature } from '../../../hardhat-test-helpers';
 import { NULL_SOUL } from '../../utils/const';
 
 describe('UNIT TEST: Soulhub Contract - setSoul', () => {
