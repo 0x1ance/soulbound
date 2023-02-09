@@ -7,6 +7,6 @@
     "outDir": "dist",
     "resolveJsonModule": true,
   },
-  "include": ["./scripts", "./__test__", "./types", "./examples", "contract-test-helpers"],
+  "include": ["./scripts", "./__test__", "./types", "./examples", "ethers-test-helpers", "hardhat-test-helpers"],
   "files": ["./hardhat.config.ts"]
 }

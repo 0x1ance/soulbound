@@ -3,7 +3,7 @@ import { Chance } from 'chance';
 import { contractDeployer } from '../../utils/ContractDeployer';
 import { expect } from 'chai'
 import { ethers } from 'hardhat';
-import { expectFnReturnChange, expectRevert } from '../../../contract-test-helpers';
+import { expectFnReturnChange, expectRevert } from '../../../ethers-test-helpers';
 
 const chance = new Chance()
 

@@ -1,7 +1,7 @@
 import { contractDeployer } from '../../utils/ContractDeployer';
 import { expect } from 'chai'
 import { ethers } from 'hardhat';
-import { expectRevert, expectEvent, expectFnReturnChange } from '../../../contract-test-helpers';
+import { expectRevert, expectEvent, expectFnReturnChange } from '../../../ethers-test-helpers';
 
 
 describe('UNIT TEST: Soulhub Contract - setManager', () => {
