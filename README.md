@@ -75,7 +75,7 @@ A soulbound contract is the satellite contract of the organizational soulhub con
 
 There are two core purposes for a contract to subscribe to the soulhub as a soulbound contract
 
-> 1. serves as **an organization-controlled contract under the subscribed soulhub contract owned by the organization**, to satisfy business requirements. Examples can be found in sbt/ERC721Soulbound: _soulhub administrators can sign a message hash, to authorize the user to perform the mint function_. Or a more complex business case study as the Moxport contract: _the moxport contract has been granted as a soulhub administrator role, therefore it can mint the soulbound ERC721 wish token when users call the mintWish function_.
+> 1. serves as **an organization-controlled contract under the subscribed soulhub contract owned by the organization**, to satisfy business requirements. Examples can be found in sbt/ERC721Soulbound: _soulhub administrators can sign a message hash, to authorize the user to perform the mint function_. Or a more complex business case study as the [Wishport] contract: _the wishport contract has been granted as a soulhub administrator role, therefore it can mint the soulbound ERC721 wish token when users call the mintWish function_.
 > 
 > 2. leverages a reputable, trustable organizational soulhub contract for user identity/information verification (_e.g. to verify whether an address is an active, real person by checking if that address has a valid soul in a famous soulhub contract, etc._).
 
@@ -107,3 +107,4 @@ This contract is is released under the [MIT License](LICENSE).
 [Truffle]: https://truffleframework.com/docs/truffle/quickstart
 [Embark]: https://embark.status.im/docs/quick_start.html
 [Hardhat]: https://hardhat.org/hardhat-runner/docs/getting-started
+[Wishport]: https://github.com/0x1ance/wishport.git
