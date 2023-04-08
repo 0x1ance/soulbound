@@ -1,4 +1,4 @@
-name: @dyut6/soulbound CI
+name: dyut6/soulbound CI
 
 on:
   - push
