@@ -248,6 +248,7 @@ contract Soulhub is ISoulhub, ERC165, Ownable {
             keccak256(
                 abi.encodePacked(
                     "setSoul(uint256,uint256,bytes,address)",
+                    block.chainid,
                     address(this),
                     _msgSender(),
                     soul_,
